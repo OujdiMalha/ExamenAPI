@@ -1,0 +1,55 @@
+﻿@page "/"
+
+@inject FilmService FilmService
+@inject SerieService SerieService
+
+<h1>Bienvenue sur notre application de films et séries!</h1>
+
+<div>
+    <h2>Films populaires</h2>
+    @if (films != null)
+    {
+        <ul>
+            @foreach (var film in films)
+            {
+                <li>@film.Title</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Chargement en cours...</p>
+    }
+</div>
+
+<div>
+    <h2>Séries populaires</h2>
+    @if (series != null)
+    {
+        <ul>
+            @foreach (var serie in series)
+            {
+                <li>@serie.Title</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Chargement en cours...</p>
+    }
+</div>
+
+@code {
+    List<Film> films;
+    List<Serie> series;
+
+protected override async Task OnInitializedAsync()
+{
+    // Appel à GetPopularFilmsAsync avec numberOfFilms = 10
+    films = await FilmService.GetPopularFilmsAsync(10);
+
+    // Appel à GetPopularSeriesAsync pour obtenir les séries populaires
+    series = await SerieService.GetPopularSeriesAsync(10);
+}
+}
+

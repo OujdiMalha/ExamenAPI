@@ -1,0 +1,50 @@
+﻿@inherits LayoutComponentBase
+
+<div class="main">
+    <header>
+        <h1>Mon Application de Streaming</h1>
+        <nav>
+            <ul>
+                <li><NavLink href="/">Accueil</NavLink></li>
+                <li><NavLink href="/films">Films</NavLink></li>
+                <li><NavLink href="/series">Séries</NavLink></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content">
+        @Body
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mon Application de Streaming</p>
+    </footer>
+</div>
+
+<style>
+    .main {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    nav ul li {
+        display: inline;
+        margin-right: 10px;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>

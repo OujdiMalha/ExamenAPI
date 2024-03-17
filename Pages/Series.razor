@@ -1,0 +1,28 @@
+﻿@page "/series"
+
+@inject SerieService SerieService
+
+<h1>Séries</h1>
+
+@if (series == null)
+{
+    <p>Chargement en cours...</p>
+}
+else
+{
+    <ul>
+        @foreach (var serie in series)
+        {
+            <li>@serie.Title</li>
+        }
+    </ul>
+}
+
+@code {
+    List<Serie> series;
+
+    protected override async Task OnInitializedAsync()
+    {
+        series = await SerieService.GetSeries();
+    }
+}

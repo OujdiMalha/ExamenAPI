@@ -1,0 +1,28 @@
+﻿@page "/films"
+
+@inject FilmService FilmService
+
+<h1>Films</h1>
+
+@if (films == null)
+{
+    <p>Chargement en cours...</p>
+}
+else
+{
+    <ul>
+        @foreach (var film in films)
+        {
+            <li>@film.Title</li>
+        }
+    </ul>
+}
+
+@code {
+    List<Film> films;
+
+    protected override async Task OnInitializedAsync()
+    {
+        films = await FilmService.GetFilms();
+    }
+}

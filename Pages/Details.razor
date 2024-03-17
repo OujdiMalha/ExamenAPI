@@ -1,0 +1,64 @@
+﻿@page "/details/{id}"
+@inject FilmService FilmService
+@inject SerieService SerieService
+@using System.Threading.Tasks
+
+<h1>Détails</h1>
+
+@if (IsLoading)
+{
+    <p>Chargement en cours...</p>
+}
+else if (filmItem == null && serieItem == null)
+{
+    <p>Impossible de trouver l'élément.</p>
+}
+else
+{
+    @if (filmItem != null)
+    {
+        <h2>@filmItem.Title</h2>
+        <p>@filmItem.Description</p>
+        <p>Année de sortie: @filmItem.ReleaseYear</p>
+        <p>Genre: @filmItem.Genre</p>
+    }
+    else if (serieItem != null)
+    {
+        <h2>@serieItem.Title</h2>
+        <p>@serieItem.Description</p>
+        <p>Année de sortie: @serieItem.ReleaseYear</p>
+        <p>Genre: @serieItem.Genre</p>
+    }
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Type { get; set; } // 'film' or 'serie'
+
+    private Film filmItem = null; // Pour stocker les détails du film
+    private Serie serieItem = null; // Pour stocker les détails de la série
+    private bool IsLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Type == "Film")
+        {
+            filmItem = await FilmService.GetFilmById(Id);
+        }
+        else if (Type == "Serie")
+        {
+            serieItem = await SerieService.GetSerieById(Id);
+        }
+        else
+        {
+            // Type non reconnu
+            filmItem = null;
+            ferieItem = null;
+        }
+
+        IsLoading = false;
+    }
+}
